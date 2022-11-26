@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <h1>
+    Higher Order Array Methods <br>
+    1) Map  <br>
+    2) Reduce <br>
+    3) Filter  <br>
+    4) Sort  <br>
+
+  </h1>
+
+  <button id="btn">GetCompanyname</button>
+
+  <button id="btn2">Getusers</button>
+
+  
+  <button id="btn3">Filterusers</button>
+
+  <div id="content"></div>
+  <div id="content2"></div>
+  <div id="content3"></div>
+
+ <script>
+   const companies = [
+  {name: "Company One", category: "Finance", start: 1981, end: 2003},
+  {name: "Company Two", category: "Retail", start: 1992, end: 2008},
+  {name: "Company Three", category: "Auto", start: 1999, end: 2007},
+  {name: "Company Four", category: "Retail", start: 1989, end: 2010},
+  {name: "Company Five", category: "Technology", start: 2009, end: 2014},
+  {name: "Company Six", category: "Finance", start: 1987, end: 2010},
+  {name: "Company Seven", category: "Auto", start: 1986, end: 1996},
+  {name: "Company Eight", category: "Technology", start: 2011, end: 2016},
+  {name: "Company Nine", category: "Retail", start: 1981, end: 1989}
+];
+
+const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25, 64, 32];
+/*
+companies.forEach((company) =>  
+  console.log(company)
+)
+*/
+const comp10 = companies.filter((company) => (company.end - company.start) == 10)
+console.log(comp10)
+
+let canvote = []
+
+canvote = ages.filter((age) => age>18)
+
+console.log(canvote)
+
+const candrink = ages.filter(
+  function(age)
+  {
+    if(age >= 21)
+    {
+      return true;
+    }
+  }
+)
+
+
+
+console.log(candrink)
+
+const financecomp = companies.filter(
+  function(company) 
+  {
+    if(company.category === "Finance")
+    {
+      return true;
+    }
+  }
+)
+
+console.log(financecomp)
+
+// Foreach
+
+companies.forEach((company) => console.log(company.name))
+
+// Map
+
+const age = ages.map((age) => {
+ if(age<=21) 
+console.log(age)
+})
+
+
+const testmap = companies.map(
+  function(company,i,j)
+  {
+    return `${i} ${company.name} = ${company.end - company.start} `
+  }
+)
+
+console.log(testmap)
+
+// Sort
+
+const sortedComp = companies.sort((c1,c2)  => {
+  if(c1.start > c2.start)
+  {
+    return 1;
+  }
+  else{
+    return -1;
+  }
+}) 
+
+console.log(sortedComp)
+
+const sortages = ages.sort((a,b) => a-b)
+
+console.log(sortages)
+
+
+//reduce
+
+const agesum = ages.reduce(function(total,age)
+{
+  return total+age;
+},0)
+
+console.log(agesum)
+
+// all
+
+const all = ages
+.map(age => age * 2)
+.filter(age => age>= 4)
+.sort((a,b) => a - b)
+.reduce((total,age) => total+age,0);
+
+console.log(all)
+
+
+document.getElementById("btn").addEventListener("click",getcompname)
+document.getElementById("btn2").addEventListener("click",getusers)
+document.getElementById("btn3").addEventListener("click",filterusers)
+function getcompname()
+{
+  let output = ''
+
+companies.forEach((company,i) => output+= `
+<li> ${i} = ${company.name} </li>  `
+)
+
+document.getElementById("content").innerHTML = output;
+}
+
+
+function getusers()
+
+{
+  let output = ''
+  fetch("https://api.github.com/users")
+  .then((res) => res.json())
+  .then((data) => {
+    data.forEach((user) => 
+    {
+      output += `
+      <img  src = "${user.avatar_url}" width = "100vw" height = "100vh">
+              <br>
+      <ul>
+        <li> Login = ${user.login} </li>
+        <li> Id = ${user.id} </li>
+      </ul>
+        `
+    })
+
+    document.getElementById('content2').innerHTML = output;
+  })
+}
+
+function filterusers()
+
+{
+  let output = ''
+  fetch("https://api.github.com/users")
+  .then((res) => res.json())
+  .then((data) => {
+    data.filter((user) => {
+      if(user.id < 10)
+    {
+      output += `
+      <img  src = "${user.avatar_url}" width = "100vw" height = "100vh">
+              <br>
+      <ul>
+        <li> Login = ${user.login} </li>
+        <li> Id = ${user.id} </li>
+      </ul>
+        `
+    }
+    }
+    
+    )
+
+    document.getElementById('content2').innerHTML = output;
+  })
+}
+
+ </script>
+
+</body>
+</html>

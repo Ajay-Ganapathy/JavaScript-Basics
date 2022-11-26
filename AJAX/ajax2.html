@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax with JSON</title>
+</head>
+<body>
+
+  <h1>Ajax with JSON</h1>
+  <button id="button">GET USER HERE</button>
+  <div id="content"></div>
+  <br> <br>
+  <button id="button2">GET USERS HERE</button>
+  <div id="content2"></div>
+
+  <script>
+  document.getElementById('button').addEventListener("click",getuser);
+
+  function getuser()
+  {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","user.json",true);
+
+    xhr.onload = function()
+    {
+      if(this.status == 200)
+      {
+        var user = JSON.parse(this.responseText);
+        output = '';
+        output += ` <li> id = ${user.id}</li> 
+                    <li> name = ${user.name}</li>  
+                    <li> email = ${user.email}</li>
+        `
+        document.getElementById("content").innerHTML = output; 
+      }
+      else if(this.status == 404)
+      {
+        document.getElementById("content").innerHTML = "File not found"; 
+      }
+    }
+
+    xhr.send();
+  }
+ 
+  document.getElementById('button2').addEventListener("click",getusers);
+
+  function getusers()
+  {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","users.json",true);
+
+    xhr.onload = function()
+    {
+      if(this.status == 200)
+      {
+        var users = JSON.parse(this.responseText);
+        output = '';
+        for(var i in users)
+        {
+          output += ` <li> id = ${users[i].id}</li> 
+                    <li> name = ${users[i].name}</li>  
+                    <li> email = ${users[i].email}</li>
+        `
+        }
+        
+        document.getElementById("content2").innerHTML = output; 
+      }
+      else if(this.status == 404)
+      {
+        document.getElementById("content2").innerHTML = "File not found"; 
+      }
+    }
+
+    xhr.send();
+  }
+ 
+  </script>
+  
+</body>
+</html>

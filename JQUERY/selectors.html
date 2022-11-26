@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>selectors</title>
+</head>
+
+<style>
+
+  body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+  }
+  header{
+    padding: 10px;
+    margin: 1.3rem;
+    background: #343a40;
+  }
+
+ header h1{
+text-align: center;
+color: white;
+  }
+
+  .container{
+    margin: auto;
+  }
+</style>
+<body>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+
+  <header id="head" >
+    <h1>Jquery Selectors</h1>
+  </header>
+
+  <main>
+    <div class="container">
+      <div id="content1">
+
+        <h1 id="heading1"> Heading 1</h1>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates modi commodi amet ut suscipit, voluptatem dignissimos fugiat veniam neque accusantium enim provident soluta, voluptatibus necessitatibus culpa officia maiores distinctio praesentium placeat, consequatur aliquid illo. Accusamus veniam optio eos, aliquid deleniti, soluta incidunt voluptatem itaque quia tempore, error nemo non ducimus molestias dicta nobis earum architecto ipsam nulla ullam veritatis expedita. Esse ipsa blanditiis aperiam nihil perspiciatis atque magni tenetur, ab optio excepturi iure dolorem dolore, magnam mollitia ipsam. Ratione eveniet ipsa consequuntur quia architecto, cumque at quas, reprehenderit soluta dicta repudiandae inventore consequatur quibusdam? Asperiores non praesentium tenetur quo laborum.</p>
+
+      </div>
+      
+    <div id="content2">
+
+      <h1 id="heading2">Heading 2</h1>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates modi commodi amet ut suscipit, voluptatem dignissimos fugiat veniam neque accusantium enim provident soluta, voluptatibus necessitatibus culpa officia maiores distinctio praesentium placeat, consequatur aliquid illo. Accusamus veniam optio eos, aliquid deleniti, soluta incidunt voluptatem itaque quia tempore, error nemo non ducimus molestias dicta nobis earum architecto ipsam nulla ullam veritatis expedita. Esse ipsa blanditiis aperiam nihil perspiciatis atque magni tenetur, ab optio excepturi iure dolorem dolore, magnam mollitia ipsam. Ratione eveniet ipsa consequuntur quia architecto, cumque at quas, reprehenderit soluta dicta repudiandae inventore consequatur quibusdam? Asperiores non praesentium tenetur quo laborum.</p>
+
+      <div id="lists">
+        <h1>Lists</h1>
+        <ul>
+          <li>List 1 </li>
+          <li>List 2 </li>
+          <li>List 3 </li>
+          <li>List 4 </li> 
+        </ul>
+      </div>
+
+      <div id="buttons">
+
+        <h1>Buttons</h1>
+
+        <input type="button" value="button1">
+
+        <input type="submit" value="submit">
+      </div>
+
+    </div>
+
+    <div id="links">
+      <h1>Links</h1>
+
+      <a href="http://www.google.com">Google</a>
+      <a href="http://www.facebook.com">Facebook</a>
+    </div>
+      
+    </div>
+  </main>
+
+ <script>
+  // $('#heading1').hide()
+
+  //$('h1').hide()
+
+ // $('ul').hide()
+
+ $('ul li:odd').css('background',"yellow")
+ $('ul li:even').css('background',"green")
+ $('ul li:nth-child(n)').css('list-style',"none")
+// $('input[type = button]').hide()
+//$('input[type = submit]').hide()
+$('input[type = submit]').css('color','red')
+//$('input[type = submit]').css('border','black solid 2px')
+
+$('a[href ="http://www.google.com"]').css('color','red')
+
+
+$('a').css('text-decoration','none')
+ </script>
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>User Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+<link
+href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css"
+rel="stylesheet"
+/>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<link rel="stylesheet" href="mapbox://styles/ajayganapathy/cktpjkgs62aaz18kk1jy0c7x7">
+
+
+
+
+<style>
+body {
+color: #404040;
+font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+margin: 0;
+padding: 0;
+/*background : linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5);*/
+/*background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%); */
+/* linear-gradient(90deg, #0065ff, #6942ef, #6554c0, #008cff, #0065ff, #6942ef);*/
+
+background-color: #e3e0cf;
+-webkit-font-smoothing: antialiased;
+}
+ 
+* {
+box-sizing: border-box;
+}
+ /*
+.sidebar {
+position: absolute;
+width: 30%;
+margin-top : 7rem;
+margin-left: 4rem;
+margin-right: 4rem;
+background: orange;
+height: 90%;
+top: 0;
+left: 0;
+overflow: hidden;
+border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+ */
+
+ .sidebar {
+  height: 100%; 
+  width: 0%; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0;
+  left: 0;
+  background-color: #212529; 
+  overflow-x: hidden; 
+  padding-top: 60px; 
+  transition: 0.5s; 
+}
+
+#main {
+  transition: margin-left .5s; 
+  padding: 20px;
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+}
+
+#menu {
+position: relative;
+padding: 20px;
+width : 97.5%;
+background: #f4f4f4;
+margin-bottom : 2rem;
+font-family: 'Open Sans', sans-serif;
+}
+.sidebar .closebtn {
+  position: absolute;
+  margin-top : 15px;
+  right: 25px;
+  font-size: 60px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background: #101010;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+
+.buttons {
+  display : flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map {
+position: absolute;
+width: 95%;
+margin-top : 2rem;
+border : 2px solid steelblue;
+
+height : 75%;
+bottom : 2;
+}
+ 
+h1 {
+font-size: 22px;
+margin: 0;
+font-weight: 400;
+line-height: 20px;
+padding: 20px 2px;
+}
+ 
+a {
+color: #404040;
+text-decoration: none;
+}
+ 
+a:hover {
+color: #101010;
+}
+ 
+.heading {
+background: #fff;
+border-bottom: 1px solid #eee;
+min-height: 60px;
+line-height: 60px;
+padding: 0 10px;
+background-color: #00853e;
+color: #fff;
+}
+ 
+.listings {
+height: 100%;
+overflow: auto;
+font-size: 1.3rem;
+line-height: 1.7rem;
+padding-bottom: 60px;
+}
+ 
+.listings .item {
+display: block;
+border-bottom: 1px solid #eee;
+color : #f4f4f4;
+padding: 10px;
+text-decoration: none;
+}
+ 
+.listings .item:last-child {
+border-bottom: none;
+}
+.listings .item .title {
+display: block;
+color: #00853e;
+font-weight: 700;
+}
+ 
+.listings .item .title small {
+font-weight: 400;
+}
+.listings .item.active .title,
+.listings .item .title:hover {
+color: #8cc63f;
+}
+.listings .item.active {
+background-color: #fa255e;
+}
+::-webkit-scrollbar {
+width: 3px;
+height: 3px;
+border-left: 0;
+background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-track {
+background: none;
+}
+::-webkit-scrollbar-thumb {
+background: #00853e;
+border-radius: 0;
+}
+ 
+.marker {
+border: none;
+cursor: pointer;
+height: 56px;
+width: 56px;
+background-image: url(marker.png);
+}
+ 
+/* Marker tweaks */
+.mapboxgl-popup {
+padding-bottom: 30px;
+}
+ 
+.mapboxgl-popup-close-button {
+display: none;
+}
+.mapboxgl-popup-content {
+font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+padding: 1rem;
+
+}
+.mapboxgl-popup-content h3 {
+background: #91c949;
+color: #fff;
+margin: 0;
+padding: 10px;
+border-radius: 3px 3px 0 0;
+font-weight: 700;
+margin-top: -15px;
+}
+ 
+.mapboxgl-popup-content h4 {
+margin: 0;
+padding: 10px;
+font-weight: 400;
+}
+ 
+.mapboxgl-popup-content div {
+padding: 10px;
+}
+ 
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+margin-top: 15px;
+}
+ 
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+border-bottom-color: #91c949;
+}
+
+.geocoder {
+position: absolute;
+z-index: 1;
+width: 50%;
+left: 50%;
+margin-left: -25%;
+top: 10px;
+}
+
+.geocoder-dropdown-item {
+padding: 5px;
+}
+.geocoder-dropdown-icon {
+margin-right: 10px;
+}
+.geocoder-dropdown-text {
+color: #5a3fc0;
+font-family: Arial, Helvetica, sans-serif;
+font-size: larger;
+}
+
+#footer{
+  margin-top : 6rem;
+  background: #212529;
+  padding : .2rem;
+  bottom :0;
+  position : absolute;
+  width : 100%;
+}
+#footer h3{
+  color : white;
+  font-size : 1rem;
+}
+
+#footer h4{
+  color : white;
+  font-size : 1rem;
+}
+</style>
+
+
+</head>
+<body>
+
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+    <div class="container">
+      <a href="#" class="navbar-brand h1">AR for Monuments</a>
+
+    
+
+      <button class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navmenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+
+        <div class="collapse navbar-collapse" id="navmenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link">Trip Advisors</a>
+            </li>
+          </ul>
+        </div>      
+    </div>
+  </nav>
+  
+<div class="sidebar" id="mySidebar">
+
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a>
+  
+<div class="heading">
+<h1>Monuments</h1>
+</div>
+<div id="listings" class="listings"></div>
+</div>
+
+<div id="main">
+
+  <div class="buttons">
+    <button class="openbtn" onclick="openNav()">&#9776; Available Monuments</button>
+  </div>
+
+  
+
+  
+
+  <div id="map" class="map"></div>
+  <div id="geocoder" class="geocoder"></div>
+
+
+ 
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/6d2ea823d0.js"></script>
+
+<script>
+
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWpheWdhbmFwYXRoeSIsImEiOiJjbDBieHU1ZGYwMWNkM2pzNGtqa3R5NGRhIn0.KWhQuscWooTQ_Y01tohS4A';
+
+
+
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "25%";
+  document.getElementById("main").style.marginLeft = "25%";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+}
+ 
+/**
+* Add the map to the page
+*/
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/satellite-v9',
+center: [-77.034084142948, 38.909671288923],
+zoom: 13,
+scrollZoom: false
+});
+
+
+ 
+const stores = {
+'type': 'FeatureCollection',
+'features': [
+{
+'type': 'Feature',
+'geometry': {
+'type': 'Point',
+'coordinates': [27.1751, 78.0421]
+},
+'properties': {
+'address': 'Agra',
+'city': 'Taj Mahal',
+'country': 'India',
+'crossStreet': 'at 15th St NW',
+'postalCode': '20005',
+'state': 'Delhi'
+}
+},
+{
+'type': 'Feature',
+'geometry': {
+'type': 'Point',
+'coordinates': [28.5245,  77.1855]
+},
+'properties': {
+
+'address': 'Delhi',
+'city': 'QUTAB MINAR',
+'country': 'India',
+'crossStreet': 'at 22nd St NW',
+'postalCode': '20037',
+'state': 'D.C.'
+}
+},
+{
+'type': 'Feature',
+'geometry': {
+'type': 'Point',
+'coordinates': [ 38.910525,-77.043929]
+},
+'properties': {
+'phoneFormatted': '(202) 387-9338',
+'phone': '2023879338',
+'address': '1512 Connecticut Ave NW',
+'city': 'Washington DC',
+'country': 'United States',
+'crossStreet': 'at Dupont Circle',
+'postalCode': '20036',
+'state': 'D.C.'
+}
+},
+
+{
+'type': 'Feature',
+'geometry': {
+'type': 'Point',
+'coordinates': [-77.049766, 38.900772]
+},
+'properties': {
+'phoneFormatted': '(202) 507-8357',
+'phone': '2025078357',
+'address': '2221 I St NW',
+'city': 'Washington DC',
+'country': 'United States',
+'crossStreet': 'at 22nd St NW',
+'postalCode': '20037',
+'state': 'D.C.'
+}
+},
+
+]
+};
+ 
+/**
+* Assign a unique id to each store. You'll use this `id`
+* later to associate each point on the map with a listing
+* in the sidebar.
+*/
+stores.features.forEach((store, i) => {
+store.properties.id = i;
+});
+ 
+/**
+* Wait until the map loads to make changes to the map.
+*/
+map.on('load', () => {
+/**
+* This is where your '.addLayer()' used to be, instead
+* add only the source without styling a layer
+*/
+map.addSource('places', {
+'type': 'geojson',
+'data': stores
+});
+ 
+/**
+* Add all the things to the page:
+* - The location listings on the side of the page
+* - The markers onto the map
+*/
+buildLocationList(stores);
+addMarkers();
+});
+ 
+/**
+* Add a marker to the map for every store listing.
+**/
+function addMarkers() {
+/* For each feature in the GeoJSON object above: */
+for (const marker of stores.features) {
+/* Create a div element for the marker. */
+const el = document.createElement('div');
+/* Assign a unique `id` to the marker. */
+el.id = `marker-${marker.properties.id}`;
+/* Assign the `marker` class to each marker for styling. */
+el.className = 'marker';
+ 
+/**
+* Create a marker using the div element
+* defined above and add it to the map.
+**/
+new mapboxgl.Marker(el, { offset: [0, -23] })
+.setLngLat(marker.geometry.coordinates)
+.addTo(map);
+ 
+/**
+* Listen to the element and when it is clicked, do three things:
+* 1. Fly to the point
+* 2. Close all other popups and display popup for clicked store
+* 3. Highlight listing in sidebar (and remove highlight for all other listings)
+**/
+el.addEventListener('click', (e) => {
+/* Fly to the point */
+flyToStore(marker);
+/* Close all other popups and display popup for clicked store */
+createPopUp(marker);
+/* Highlight listing in sidebar */
+const activeItem = document.getElementsByClassName('active');
+e.stopPropagation();
+if (activeItem[0]) {
+activeItem[0].classList.remove('active');
+}
+const listing = document.getElementById(
+`listing-${marker.properties.id}`
+);
+listing.classList.add('active');
+});
+}
+}
+ 
+/**
+* Add a listing for each store to the sidebar.
+**/
+function buildLocationList({ features }) {
+for (const { properties } of features) {
+/* Add a new listing section to the sidebar. */
+const listings = document.getElementById('listings');
+const listing = listings.appendChild(document.createElement('div'));
+/* Assign a unique `id` to the listing. */
+listing.id = `listing-${properties.id}`;
+/* Assign the `item` class to each listing for styling. */
+listing.className = 'item';
+ 
+/* Add the link to the individual listing created above. */
+const link = listing.appendChild(document.createElement('a'));
+link.href = '#';
+link.className = 'title';
+link.id = `link-${properties.id}`;
+link.innerHTML = `${properties.address}`;
+ 
+/* Add details to the individual listing. */
+const details = listing.appendChild(document.createElement('div'));
+details.innerHTML = `${properties.city}`;
+if (properties.phone) {
+details.innerHTML += ` &middot; ${properties.phoneFormatted}`;
+}
+ 
+/**
+* Listen to the element and when it is clicked, do four things:
+* 1. Update the `currentFeature` to the store associated with the clicked link
+* 2. Fly to the point
+* 3. Close all other popups and display popup for clicked store
+* 4. Highlight listing in sidebar (and remove highlight for all other listings)
+**/
+link.addEventListener('click', function () {
+for (const feature of features) {
+if (this.id === `link-${feature.properties.id}`) {
+flyToStore(feature);
+createPopUp(feature);
+}
+}
+const activeItem = document.getElementsByClassName('active');
+if (activeItem[0]) {
+activeItem[0].classList.remove('active');
+}
+this.parentNode.classList.add('active');
+});
+}
+}
+ 
+/**
+* Use Mapbox GL JS's `flyTo` to move the camera smoothly
+* a given center point.
+**/
+function flyToStore(currentFeature) {
+map.flyTo({
+center: currentFeature.geometry.coordinates,
+zoom: 15
+});
+}
+
+
+ 
+/**
+* Create a Mapbox GL JS `Popup`.
+**/
+function createPopUp(currentFeature) {
+const popUps = document.getElementsByClassName('mapboxgl-popup');
+if (popUps[0]) popUps[0].remove();
+const popup = new mapboxgl.Popup({ closeOnClick: false })
+.setLngLat(currentFeature.geometry.coordinates)
+.setHTML(
+`<h3>Taj Mahal</h3>
+<h4> Taj Mahal is one among 7 wonders </h4>
+<img src=
+"https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
+        class="qr-code img-thumbnail img-responsive" />
+       <a class = "btn btn-primary" href = "ar.html"> View AR Model </a>`
+)
+.addTo(map);
+}
+
+map.addControl(
+new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+mapboxgl: mapboxgl,
+
+render: function (item) {
+// extract the item's maki icon or use a default
+const maki = item.properties.maki || 'marker';
+return `<div class='geocoder-dropdown-item'>
+<img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/${maki}-15.svg'>
+<span class='geocoder-dropdown-text'>
+${item.text}
+</span>
+</div>`;
+},
+
+}
+
+),
+
+
+);
+
+
+
+/*
+document.getElementById("threed").addEventListener("click", showar)
+
+function showar(e)
+{
+  var thd = document.createElement("div")
+var ifrm =  document.createElement("iframe")
+ifrm.setAttribute(
+  title = "Taj Mahal",
+  src="https://sketchfab.com/models/cf2ee708119a43c2a8dc25c46d7b65c1/embed"
+)
+thd.appendChild(ifrm);
+}*/
+
+</script>
+</body>
+</html>

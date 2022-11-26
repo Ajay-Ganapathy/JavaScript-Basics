@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <h1>Check Leap Year</h1>
+  <input type = "number" placeholder = "Enter the year" value = "" id = "input" />
+  <button id = "leap">Check</button>
+  <div id = "res"></div>
+
+  <h1>Convert Celsius to Farenheit</h1>
+  <input type = "number" placeholder = "Enter the value in Celsius" value = "" id = "input2" />
+
+  <button id = "cel">Convert</button>
+  <div id = "res1"></div>
+
+  <h1>Convert Farenheit to Celsius </h1>
+  <input type = "number" placeholder = "Enter the value in Celsius" value = "" id = "input3" />
+
+  <button id = "fahr">Convert</button>
+  <div id = "res2"></div>
+
+  
+  <h1>Calculate the Value for an Equation result = ((z-(x+y))/z) * 100 , given x = 5,y = 3, z = 10</h1>
+ 
+  <div id = "res3"></div>
+
+  
+  <h1>Sorting an Array :-</h1>
+ 
+  <div id = "res4"></div>
+  <script>
+    const lp = document.getElementById("leap");
+    const inp = document.getElementById("input");
+    const inp2 = document.getElementById("input2");
+    const inp3 = document.getElementById("input3");
+    const res = document.getElementById("res");
+    const res1 = document.getElementById("res1");
+    const res2 =  document.getElementById("res2");
+    const cel = document.getElementById("cel");
+    const fahr = document.getElementById("fahr");
+    const res3 = document.getElementById("res3");
+    const res4 = document.getElementById("res4");
+    var x = 5;
+    var y = 3;
+    var z = 10;
+    var arr = [12,1,45,35,19];
+    res3.innerHTML = ((z-(x+y))/z)*100;
+    res4.innerHTML = `Given Array = ${arr} <br> Sorted Array = ${arr.sort()}`;
+    lp.addEventListener("click",leapyear);
+    inp.addEventListener("input",leapyear);
+    inp2.addEventListener("input",celToFahr);
+    inp3.addEventListener("input",FahrToCel);
+    cel.addEventListener("click",celToFahr);
+    fahr.addEventListener("click",FahrToCel);
+
+
+    function leapyear(e){
+      const val = e.target.value;
+      console.log("clicked")
+      res.innerHTML = val  % 100 === 0 ? val %400 === 0 : val %4 === 0
+    }
+
+    function celToFahr(e){
+      const val = e.target.value;
+      console.log("clicked")
+      res1.innerHTML = val * 9/5 + 32;
+    }
+
+    function FahrToCel(e){
+      const val = e.target.value;
+      res2.innerHTML = (val - 32) * 5/9;
+    }
+  </script>
+</body>
+</html>

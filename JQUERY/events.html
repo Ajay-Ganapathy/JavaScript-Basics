@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>events</title>
+</head>
+
+<style>
+
+  body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+  }
+  header{
+    padding: 10px;
+    margin: 1.3rem;
+    background: #343a40;
+  }
+
+ header h1{
+text-align: center;
+color: white;
+  }
+
+  .container{
+    margin: auto;
+  }
+</style>
+<body>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  
+
+  <header id="head" >
+    <h1>Jquery Events</h1>
+  </header>
+
+  <main>
+    <div class="container">
+      <input type="button" value="button1" class = "button1" id="button1">
+      <input type="button" value="button2" id="button2">
+			<input type="button" value="button3" id="button3">
+      <p class="para1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa repellendus corrupti reprehenderit illum sunt consequuntur esse fugit aliquam labore accusantium sit similique voluptates cum, qui, laudantium tenetur quibusdam iusto nam iste amet eligendi velit. Eaque dolore molestias ipsam, repellendus molestiae error dignissimos minus, delectus necessitatibus mollitia nemo, enim iste. Est accusamus repellendus harum tempora consequatur maxime velit aliquam possimus nam fugit consectetur non quisquam fugiat officia laborum illo sint neque praesentium odit, dignissimos iusto itaque nostrum perspiciatis laboriosam. Enim, aperiam commodi. Voluptate sint aliquid voluptatibus repellat? Magni neque eligendi rerum voluptatibus laudantium ratione harum eos provident, nobis eum veniam. Dolorem!</p>
+
+			<div id="mouseevents">
+				<h1>Mouse Events</h1>
+				<ol>
+					<li>Click</li>
+					<li>Double Click</li>
+					<li>Mousehover</li>
+					<li>Mouseenter</li>
+					<li>Mouseleave</li>
+					<li>Mousemove</li>
+					<li>Mouseup</li>
+					<li>Mousedown</li>
+				</ol>
+				<hr>
+				<h1>Keyboard Events</h1>
+				<ol>
+					<li>Keyup</li>
+					<li>Keydown</li>
+				</ol>
+
+				<hr>
+				<h1>Form Events</h1>
+				<ol>
+					<li>Focus(input)</li>
+					<li>Blur(input)</li>
+					<li>Change(select)</li>
+					<li>Submit</li>
+				</ol>
+				
+				<hr>
+			</div>
+
+			<div id="coords">
+				<h1>Coords(Example for mouse move)</h1>
+				<div id="mouse-coords"></div>
+			</div>
+
+			<form id="myform" >
+				<h1>Forms</h1>
+				<div>
+					<label>Name</label>
+					<input type="text" placeholder = "Enter name" id="name">
+				</div>
+				<div>
+					<label>Age</label>
+					<input type="text" placeholder="Enter age" id="age">
+				</div>
+			<div>
+				<select  id="gender" name="gender">
+					<option value="Choose your gender" selected>Choose your gender</option>
+					<option value="male">male</option>
+					<option value="female">female</option>
+					<option value="Rather not say">Rather not say</option>
+				</select>
+			</div>
+			
+			
+				<input type="submit" value="submit">
+			</form>
+    </div>
+  </main>
+
+ <script>
+
+ // $('input[type = button]').click(() => alert("button Clicked"))
+
+  $(document).ready(
+    () => {
+      //$('#button1').on('click',() => $('#para1').hide())
+     // $('#button1').on('click',() => $('#para1').show())
+     // $('#button2').click(() => $('.para1').toggle())  
+
+    //	$('#button1').dblclick(function(){
+			//	$('.para1').toggle();
+
+// Mouse Hover is an concoction of mouseenter and mouseleave
+   //   $('#button1').hover(() => $('.para1').toggle())
+
+     $('#button2').on('mouseenter', function()
+      {
+        $('.para1').hide()
+      })
+
+      $('#button2').on('mouseleave', function()
+      {
+        $('.para1').show()
+      })
+			$(document).mousemove((e) => $('#mouse-coords').html('X = ' +e.clientX + ' Y = ' + e.clientY) )
+		
+			$('#button3').mouseup(() => $('.para1').hide())
+			$('#button3').mousedown(() => $('.para1').show())
+
+		//	$('#button1').click((e) => alert(e.target.id))
+//	$('#button1').click((e) => alert(e.target.outerHTML))
+	$('#button1').click((e) => alert(e.target.className))
+//	$('input').keydown((e) => console.log(e.target.value))
+	$('input').keyup((e) => console.log(e.target.value))
+ 
+$('input').focus(function()
+{
+	$(this).css("background","pink")
+})
+
+$('input').blur(function()
+{
+	$(this).css("background","white")
+})
+
+$('select#gender').change(function(e)
+{
+	alert(`The gender is changed to ${e.target.value}`)
+})
+
+$('form#myform').submit((e)=>{
+	e.preventDefault();
+	var name = $('input#name').val()
+	console.log(`Welcome ${name}`)
+	console.log("submitted")
+})
+});
+		
+ </script>
+</body>
+</html> 

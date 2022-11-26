@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax 3 with external link</title>
+</head>
+<body>
+
+  <style>
+    .user{
+      display : flex;
+      padding : 2rem;
+      margin : 1rem;
+      border-bottom: 2px #000 solid;
+    }
+    #button{
+      margin-bottom: 1rem;
+    }
+    .user ul{
+      list-style: none;
+    }
+  </style>
+
+  <h1>Ajax  with external link</h1>
+  <h1>Fetching the users of Github using Github</h1>
+  <button id = "button">Get github users</button>
+  <div id="content"></div>
+
+
+  <script>
+    document.getElementById("button").addEventListener("click",getgitusers)
+    
+    function getgitusers()
+    {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET","https://api.github.com/users",true)
+
+      xhr.onload = function()
+      {
+        if(this.status == 200)
+        {
+          var users = JSON.parse(this.responseText);
+          output = '';
+          for(var i in users)
+          {
+            output += `
+            <div class = "user"> 
+              <img src = "${users[i].avatar_url}" width = "100vw" height = "100vh">
+              <br>
+            <ul> 
+              <li> Login = ${users[i].login} </li>
+              <li> Id = ${users[i].id} </li>
+            </ul>
+            </div>  
+              `              
+          }
+          document.getElementById('content').innerHTML = output;
+        }
+        else if(this.status == 404)
+        {
+          document.getElementById('content').innerHTML = "File not found";
+        }
+      }
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

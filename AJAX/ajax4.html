@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax with PHP</title>
+</head>
+<body>
+  <h1>Ajax with PHP</h1>
+
+  <h1>Synchronous GET form with PHP</h1>
+
+  <form method="GET" action="sample.php">
+    <label>Name</label> <br>
+    <input type="text" name="name" placeholder="Enter name">
+    <button id="button">Click Here</button>
+
+  </form>
+
+  <h1>AJAX GET form with PHP</h1>
+
+  <form id="getform">
+    <label>Name</label> <br>
+    <input type="text" name="name" placeholder="Enter name" id="name1">
+  <input type="submit" value="Click here">
+
+  </form>
+
+  <div id="content"></div>
+
+  <h1>Synchronous POST form with PHP</h1>
+
+  <form method="POST" action="sample.php">
+    <label>Name</label> <br>
+    <input type="text" name="name" placeholder="Enter name">
+    <button id="button">Click Here</button>
+
+  </form>
+
+  <h1>AJAX POST form with PHP</h1>
+
+  <form id="postform">
+    <label>Name</label> <br>
+    <input type="text" name="name" placeholder="Enter name" id="name2">
+  <input type="submit" value="Click here">
+
+  </form>
+
+  
+  <div id="content2"></div>
+
+  <script>
+
+    document.getElementById("getform").addEventListener("submit",loadphp);
+    document.getElementById("postform").addEventListener("submit",postname);
+
+    function loadphp(e){
+    e.preventDefault();
+    var name = document.getElementById("name1").value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","sample.php?name="+name,true);
+    xhr.onload = function()
+    {  
+      if(this.status == 200)
+      {
+        console.log(this.responseText)
+        document.getElementById("content").innerHTML = this.responseText;
+      }
+      else{
+        document.getElementById("content").innerHTML = "Page not found";
+      }
+    }
+    xhr.send();  
+    }
+
+    function postname(e){
+    e.preventDefault();
+    var name = document.getElementById("name2").value;
+    var params = "name = "+name;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST","sample.php",true);
+    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xhr.onload = function()
+    {  
+      if(this.status == 200)
+      {
+        console.log(this.responseText)
+        document.getElementById("content2").innerHTML = this.responseText;
+      }
+      else{
+        document.getElementById("content2").innerHTML = "Page not found";
+      }
+    }
+    xhr.send(params);  
+
+  }
+  
+  </script>
+  
+</body>
+</html>
